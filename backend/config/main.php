@@ -11,14 +11,14 @@ return [
     'basePath' => dirname(__DIR__),
     'controllerNamespace' => 'backend\controllers',
     'bootstrap' => ['log'],
-    'language'=>'zh-CN',//ÉèÖÃÖĞÎÄ
+    'language'=>'zh-CN',//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     'modules' => [],
     'components' => [
         'request' => [
             'csrfParam' => '_csrf-backend',
         ],
         'user' => [
-            'identityClass' => 'common\models\User',
+            'identityClass' => 'backend\models\AdminPwd',
             'enableAutoLogin' => true,
             'identityCookie' => ['name' => '_identity-backend', 'httpOnly' => true],
         ],
@@ -39,12 +39,35 @@ return [
             'errorAction' => 'site/error',
         ],
 
-        'urlManager' => [//µØÖ·¾²Ì¬»¯
+        'urlManager' => [//ï¿½ï¿½Ö·ï¿½ï¿½Ì¬ï¿½ï¿½
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
             ],
         ],
+        'qiniu'=>[
+            'class'=>\backend\components\Qiniu::className(),
+            'up_host'=>'http://up.qiniu.com',
+            'accessKey'=>'sWBj7OeAUrGYTz1s8xEKdPMMHQjRWZYw6_8eWIg5',
+            'secretKey'=>'nBJF3chS_rNmQbroplwS54SkP6S5UCPv5R-2IfeB',
+            'bucket'=>'yiishop',
+            'domain'=>'http://or9ry3af8.bkt.clouddn.com/',
+        ],
+        'ueditor' => [
+            'class' => \crazyfd\ueditor\Ueditor::className(),
+            'config'=>[
+                'uploadDir'=>date('Y/m/d'),
+                'imagePathFormat'=>"/Upload/album/{yyyy}{mm}{dd}/{time}{rand:6}"//ä¸Šä¼ ä¿å­˜è·¯å¾„
+            ]
+            ],
+        'upload' => [
+            'class' => 'kucha\ueditor\UEditorAction',
+            'config' => [
+//                "imageUrlPrefix"  => "http://www.baidu.com",//å›¾ç‰‡è®¿é—®è·¯å¾„å‰ç¼€
+                "imagePathFormat" => "/upload/album/{yyyy}{mm}{dd}/{time}{rand:6}",//ä¸Šä¼ ä¿å­˜è·¯å¾„
+//                "imageRoot"=> Yii::getAlias("@webroot"),
+            ],
+        ]
 
     ],
     'params' => $params,

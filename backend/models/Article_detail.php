@@ -11,12 +11,11 @@ class Article_detail extends ActiveRecord{
     }
     public function rules(){
         return[
-            [['article_id','content'],'required'],
+            [['content'],'required'],
         ];
     }
     public function attributeLabels(){
         return[
-            'article_id'=>'文章名称',
             'content'=>'文章详情'
         ];
     }

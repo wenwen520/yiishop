@@ -7,6 +7,7 @@
         <td>分类id</td>
         <td>排序</td>
         <td>状态</td>
+        <td>文章详情</td>
         <td>创建时间</td>
         <td>操作</td>
     </tr>
@@ -18,6 +19,7 @@
             <td><?=$article->article_category->name?></td>
             <td><?=$article->sort?></td>
             <td><?=$article->status?></td>
+            <td><?=substr($article->article_detail->content,0,20)?></td>
             <td><?=date('Y-d-m G:i:s',$article->create_time)?></td>
             <td>
                 <?=\yii\bootstrap\Html::a('查看文章详情',['article/detail','id'=>$article->id],['class'=>'btn btn-info btn-xs'])?>
@@ -31,6 +33,6 @@
 <?php
 echo \yii\widgets\LinkPager::widget([
     'pagination'=>$page,
-    'lastPageLabel'=>'下一页',
+    'nextPageLabel'=>'下一页',
     'prevPageLabel'=>'上一页'
 ]);

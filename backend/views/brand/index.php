@@ -32,7 +32,7 @@
 <?php
 echo \yii\widgets\LinkPager::widget([
 'pagination'=>$page,
-'lastPageLabel'=>'下一页',
+'nextPageLabel'=>'下一页',
 'prevPageLabel'=>'上一页'
 
 ]);

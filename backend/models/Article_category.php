@@ -10,7 +10,7 @@ class Article_category extends ActiveRecord{
     //状态
     public static $status=['1'=>'正常','0'=>'隐藏'];
     //帮助文章
-    public static $is_help=['1'=>'是','2'=>'不是'];
+    public static $is_help=['1'=>'帮助','2'=>'文章'];
 
     public function rules(){
         return[
@@ -25,7 +25,7 @@ class Article_category extends ActiveRecord{
             'intro'=>'分类简介',
             'sort'=>'排序',
             'status'=>'状态',
-            'is_help'=>'是否是帮助文章',
+            'is_help'=>'类型',
         ];
     }
 

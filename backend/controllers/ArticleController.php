@@ -9,6 +9,7 @@ use yii\web\Controller;
 class ArticleController extends Controller{
     public function actionIndex(){
         $query = Article::find()->where(['>','status','-1']);
+
         $total = $query->count();
         $page = new Pagination([
             'totalCount'=>$total,
@@ -21,48 +22,71 @@ class ArticleController extends Controller{
 
 
     //添加
-    public function actionAdd(){
+    public function actionAdd()
+    {
         //实例化模型
         $model = new Article();
+        $detail = new Article_detail();
         //实例化组件
         $request=\Yii::$app->request;
+
         //判断传输方式
         if($request->isPost){
-            //加载数据
-            $model->load($request->post());
-            if($model->validate()){
-                //验证成功
-                //保存数据
-                $model->create_time=time();
-                $model->save();
+            //同时加载文章和详情的数据
+           if( $model->load($request->post()) && $detail->load($request->post())){
+               //同时验证文章和详情
+               if($model->validate() && $detail->validate()){
+                   $model->create_time=time();
 
-                //跳转到列表页
-                return $this->redirect(['article/index']);
-            }
+
+                    $model->save();
+                   $detail->article_id = $model->id;
+//
+                      //保存详情表
+                      $detail->save();
+                      //保存成功跳转
+                      \Yii::$app->session->setFlash('success','添加文章成功');
+                      return $this->redirect(['article/index']);
+
+               }else{
+                   var_dump($model->getErrors());
+                   var_dump($detail->getErrors());
+                   exit;
+               }
+
+           }
         }
+        //调用添加视图 分配文章模型和详情模型
+        return $this->render('add',['model'=>$model,'detail'=>$detail]);
 
-        //调用视图显示添加表单
-        return $this->render('add',['model'=>$model]);
     }
 
     //修改
     public function actionEdit($id){
        $model = Article::findOne(['id'=>$id]);
+        $detail =Article_detail::findOne(['article_id'=>$id]);
+
         $request=\Yii::$app->request;
         if($request->isPost){
-            $model->load($request->post());
-            if($model->validate()){
-                $model->save();
-                \Yii::$app->session->setFlash('success','修改成功');
-                return $this->redirect(['article/index']);
+            if($model->load($request->post()) && $detail->load($request->post())){
+                if($model->validate() && $detail->validate()){
+                    $model->save();
+                    $detail->save();
+                    \Yii::$app->session->setFlash('success','修改成功');
+                    return $this->redirect(['article/index']);
+
+
+            }
+
             }
         }
-        return $this->render('add',['model'=>$model]);
+        return $this->render('add',['model'=>$model,'detail'=>$detail]);
 
     }
      //删除
     public function actionDelete($id){
        $model = Article::findOne(['id'=>$id]);
+
         $model->status =-1;
         $model->save();
         \Yii::$app->session->setFlash('success','删除成功');

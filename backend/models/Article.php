@@ -4,6 +4,8 @@ use yii\db\ActiveRecord;
 
 //文章模型
 class Article extends ActiveRecord{
+
+    public $content;
     //建立文章和分类的一对一关系
     public function getArticle_category(){
         return $this->hasOne(Article_category::className(),['id'=>'article_category_id']);
