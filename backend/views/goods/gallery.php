@@ -48,7 +48,7 @@ EOF
         <?php foreach($goods->galleries as $gallery):?>
 
             <tr id="gallery_<?=$gallery->id?>" data-id="<?=$gallery->id?>">
-                <td><?=Html::img([$gallery->photo],['style'=>'width:100px;'])?></td>
+                <td><?=Html::img(Yii::getAlias('@webroot').$gallery->photo,['style'=>'width:100px;'])?></td>
                 <td><?=Html::button('删除',['class'=>'btn btn-danger del_btn'])?></td>
             </tr>
         <?php endforeach;?>

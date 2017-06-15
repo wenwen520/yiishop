@@ -41,7 +41,7 @@ EOF
 
 
 if($model->logo){
-    echo  yii\helpers\Html::img('@web'.$model->logo,['width'=>50]);
+    echo  yii\helpers\Html::img(Yii::getAlias('@web').$model->logo,['width'=>50]);
 }else{
     echo  yii\helpers\Html::img('',['style'=>'display:none','width'=>50,'id'=>'img_logo']);
 }
