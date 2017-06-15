@@ -45,7 +45,7 @@ class AdminController extends Controller
 
 
     //添加管理员测试帐号
-    public function actionA()
+    public function actionTest()
     {
         $admin = new Admin();
             $admin->uesrname='admin';
