@@ -44,6 +44,18 @@ class AdminController extends Controller
     }
 
 
+    //添加管理员测试帐号
+    public function actionA()
+    {
+        $admin = new Admin();
+            $admin->uesrname='admin';
+            $admin->password='123456';
+        $admin->auth_key = \Yii::$app->security->generateRandomString();
+        $admin->save();
+                return $this->redirect(['admin/login']);
+    }
+
+
 
     public function actionEdit($id)
     {
