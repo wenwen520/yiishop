@@ -11,16 +11,17 @@ return [
     'basePath' => dirname(__DIR__),
     'controllerNamespace' => 'backend\controllers',
     'bootstrap' => ['log'],
-    'language'=>'zh-CN',//��������
+    'language'=>'zh-CN',
     'modules' => [],
     'components' => [
         'request' => [
             'csrfParam' => '_csrf-backend',
         ],
         'user' => [
-            'identityClass' => 'backend\models\AdminPwd',
-            'enableAutoLogin' => true,
+            'identityClass' => 'backend\models\Admin',//登录
+            'enableAutoLogin' => true,//是否开启自动登录
             'identityCookie' => ['name' => '_identity-backend', 'httpOnly' => true],
+            'authTimeout' => 3600,//session的超时时间
         ],
         'session' => [
             // this is the name of the session cookie used for login on the backend
@@ -39,7 +40,7 @@ return [
             'errorAction' => 'site/error',
         ],
 
-        'urlManager' => [//��ַ��̬��
+        'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [

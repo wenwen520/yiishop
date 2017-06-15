@@ -47,6 +47,7 @@ class Admin extends ActiveRecord implements IdentityInterface{
      */
     public static function findIdentityByAccessToken($token, $type = null)
     {
+
         // TODO: Implement findIdentityByAccessToken() method.
     }
 
@@ -74,6 +75,7 @@ class Admin extends ActiveRecord implements IdentityInterface{
      */
     public function getAuthKey()
     {
+        return $this->auth_key;
         // TODO: Implement getAuthKey() method.
     }
 
@@ -87,6 +89,12 @@ class Admin extends ActiveRecord implements IdentityInterface{
      */
     public function validateAuthKey($authKey)
     {
+        return $this->getAuthKey() === $authKey;
         // TODO: Implement validateAuthKey() method.
+    }
+
+    public function generateAuthKey(){
+        //往数据表auth_key字段写入随机的一串session值
+        $this->auth_key = \Yii::$app->security->generateRandomString();
     }
 }

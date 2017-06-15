@@ -16,7 +16,7 @@
             <td><?=$admin->login_ip?></td>
             <td>
 
-
+                <?=\yii\bootstrap\Html::a('修改密码',['admin/pwd','id'=>$admin->id],['class'=>'btn btn-warning btn-xs'])?>
                 <?=\yii\bootstrap\Html::a('修改',['admin/edit','id'=>$admin->id],['class'=>'btn btn-warning btn-xs'])?>
                 <?=\yii\bootstrap\Html::a('删除',['admin/delete','id'=>$admin->id],['class'=>'btn btn-danger btn-xs'])?>
             </td>

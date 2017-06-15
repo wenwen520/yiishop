@@ -42,10 +42,9 @@ AppAsset::register($this);
         ['label' => '商品', 'url' => ['/goods/index']],
         ['label' => '文章分类', 'url' => ['/article_category/index']],
         ['label' => '文章', 'url' => ['/article/index']],
-        ['label' => '商品相册', 'url' => ['/album/index']],
     ];
-
-    if (Yii::$app->user->isGuest) {
+    //var_dump();
+    if (\Yii::$app->user->isGuest) {
         $menuItems[] = ['label' => '登录', 'url' => ['/admin/login']];
     } else {
         $menuItems[] = '<li>'

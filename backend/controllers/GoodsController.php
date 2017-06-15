@@ -1,7 +1,8 @@
 <?php
 namespace backend\controllers;
 
-use backend\models\Album;
+//use backend\models\Album;
+use backend\models\Gallery;
 use backend\models\Goods;
 use backend\models\Goods_category;
 use backend\models\Goods_day_count;
@@ -14,6 +15,7 @@ use yii\filters\VerbFilter;
 use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use xj\uploadify\UploadAction;
+use yii\web\NotFoundHttpException;
 
 class GoodsController extends  Controller{
     public function actionIndex(){
@@ -58,7 +60,7 @@ class GoodsController extends  Controller{
                     $day = date('Ymd');
                     //查询数量表的每日添加数
                     //如果查出来是0  就从1开始计算 如果不是  就从count的数量  +1算
-                    if(empty(Goods_day_count:: findOne(['day'=>$day])->count)){
+                    if(Goods_day_count:: findOne(['day'=>$day])==null){
                         $goods_day_count->day = $day;
                         $goods_day_count->count =1;
                         $goods_day_count->save();
@@ -146,8 +148,29 @@ class GoodsController extends  Controller{
 
     }
 
+    //商品相册
+    public function actionGallery($id){
+        $goods = Goods::findOne(['id'=>$id]);
+        if($goods==null){
+            throw new NotFoundHttpException('商品不存在');
+        }
+        return $this->render('gallery',['goods'=>$goods]);
+    }
 
 
+    /*
+     * AJAX删除图片
+     */
+    public function actionDelGallery(){
+        $id = \Yii::$app->request->post('id');
+        $model = Gallery::findOne(['id'=>$id]);
+        if($model && $model->delete()){
+            return 'success';
+        }else{
+            return 'fail';
+        }
+
+    }
 
 
     //uploadify插件
@@ -189,17 +212,23 @@ class GoodsController extends  Controller{
                 'afterValidate' => function (UploadAction $action) {},
                 'beforeSave' => function (UploadAction $action) {},
                 'afterSave' => function (UploadAction $action) {
+                        //图片上传成功的同时 将图片和商品关联起来
+                        $model = new Gallery();
+                        $model->goods_id = \Yii::$app->request->post('goods_id');
+                        $model ->photo = $action->getWebUrl();
+                        $model->save();
+                        $action->output['goods_id']= $model->photo;
 
-                    $imgUrl=$action->getWebUrl();
-
-                    $action->output['fileUrl'] = $action->getWebUrl();
-
-                    //调用七牛云 将上传的图片保存到七牛云
-                    $qiniu = \Yii::$app->qiniu;
-
-                    $qiniu->uploadFile(\Yii::getAlias('@webroot').$imgUrl,$imgUrl);
-                    //获取图片在七牛云的地址
-                    $qiniu->getLink($imgUrl);
+//                    $imgUrl=$action->getWebUrl();
+//
+//                    $action->output['fileUrl'] = $action->getWebUrl();
+//
+//                    //调用七牛云 将上传的图片保存到七牛云
+//                    $qiniu = \Yii::$app->qiniu;
+//
+//                    $qiniu->uploadFile(\Yii::getAlias('@webroot').$imgUrl,$imgUrl);
+//                    //获取图片在七牛云的地址
+//                    $qiniu->getLink($imgUrl);
 
 
 //                    $action->getFilename(); // "image/yyyymmddtimerand.jpg"
@@ -241,16 +270,16 @@ class GoodsController extends  Controller{
 //
 //    }
 
-        //商品相册
-    public function actionAlbum($id){
-        //上传的时候把图片 根据商品id 全部保存到相册
-
-        $albums = Album::findAll(['goods_id'=>$id]);
-//        var_dump($album);exit;
-        return $this->render('album',['albums'=>$albums]);
-
-
-    }
+//        //商品相册
+//    public function actionAlbum($id){
+//        //上传的时候把图片 根据商品id 全部保存到相册
+//
+//        $albums = Album::findAll(['goods_id'=>$id]);
+////        var_dump($album);exit;
+//        return $this->render('album',['albums'=>$albums]);
+//
+//
+//    }
 
 
 }

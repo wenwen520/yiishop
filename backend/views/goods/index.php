@@ -42,7 +42,7 @@ echo \yii\bootstrap\Html::endForm();
                 <td><?=$model->sort?></td>
                 <td><?=date('Y-m-d H:i:s',$model->create_time)?></td>
                 <td>
-                    <?=\yii\bootstrap\Html::a('查看相册',['goods/album','id'=>$model->id],['class'=>'btn btn-info btn-xs'])?>
+                    <?=\yii\bootstrap\Html::a('查看相册',['goods/gallery','id'=>$model->id],['class'=>'btn btn-info btn-xs'])?>
                     <?=\yii\bootstrap\Html::a('商品详情',['goods/intro','id'=>$model->id],['class'=>'btn btn-info btn-xs'])?>
                     <?=\yii\bootstrap\Html::a('修改',['goods/edit','id'=>$model->id],['class'=>'btn btn-warning btn-xs'])?>
                     <?=\yii\bootstrap\Html::a('删除',['goods/delete','id'=>$model->id],['class'=>'btn btn-danger btn-xs'])?>

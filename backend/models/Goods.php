@@ -10,8 +10,8 @@ class Goods extends  ActiveRecord
     public static $is_on_sale = ['1' => '在售', '0' => '下架'];
 
     //关联相册表
-    public function getAlbum(){
-        return $this->hasOne(Album::className(),['goods_id'=>'id']);
+    public function getGalleries(){
+        return $this->hasMany(Gallery::className(),['goods_id'=>'id']);
     }
 
     //关联商品每日添加数量表
