@@ -9,7 +9,7 @@ class LoginForm extends Model
     public $username;//用户名
     public $password;//密码
     public $code;
-    public $cookie;
+    public $remember;
 
 
 
@@ -34,7 +34,7 @@ class LoginForm extends Model
 
             'username' => '用户名',
             'password' => '密码',
-            'cookie'=>'自动登录',
+            'remember'=>'自动登录',
             'code'=>'验证码',
         ];
 
@@ -54,9 +54,9 @@ class LoginForm extends Model
                 //自动登录
                 $admin->generateAuthKey();
                 $admin->save(false);
-                $cookie = \Yii::$app->user->authTimeout;
+                $remember= \Yii::$app->user->authTimeout;
                 //密码正确  登录
-                \Yii::$app->user->login($admin,$this->cookie?$cookie:0);
+                \Yii::$app->user->login($admin,$this->remember?$remember:0);
 
             } else {
 

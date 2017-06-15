@@ -21,7 +21,7 @@ return [
             'identityClass' => 'backend\models\Admin',//登录
             'enableAutoLogin' => true,//是否开启自动登录
             'identityCookie' => ['name' => '_identity-backend', 'httpOnly' => true],
-            'authTimeout' => 3600,//session的超时时间
+            'authTimeout' => 3600*24*7,//session的超时时间
         ],
         'session' => [
             // this is the name of the session cookie used for login on the backend
