@@ -61,8 +61,8 @@ echo $form->field($intro,'content')->widget(kucha\ueditor\UEditor::className());
 echo \yii\bootstrap\Html::submitButton('提交',['class'=>'btn btn-info btn-sm']);
 \yii\bootstrap\ActiveForm::end();
 
-$this->registerCssFile('@web/zTree/css/zTreeStyle/zTreeStyle.css');
-$this->registerJsFile('@web/zTree/js/jquery.ztree.core.js',['depends'=>\yii\web\JqueryAsset::className()]);
+$this->registerCssFile('@web/ztree/css/zTreeStyle/zTreeStyle.css');
+$this->registerJsFile('@web/ztree/js/jquery.ztree.core.js',['depends'=>\yii\web\JqueryAsset::className()]);
 $zNodes = \yii\helpers\Json::encode(\backend\models\Goods_category::find()->asArray()->all());
 $js = new \yii\web\JsExpression(
     <<<JS
