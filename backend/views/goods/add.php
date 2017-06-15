@@ -63,7 +63,7 @@ echo \yii\bootstrap\Html::submitButton('提交',['class'=>'btn btn-info btn-sm']
 
 $this->registerCssFile('@web/ztree/css/zTreeStyle/zTreeStyle.css');
 $this->registerJsFile('@web/ztree/js/jquery.ztree.core.js',['depends'=>\yii\web\JqueryAsset::className()]);
-$zNodes = \yii\helpers\Json::encode(\backend\models\Goods_category::find()->asArray()->all());
+$zNodes = \yii\helpers\Json::encode($categories);
 $js = new \yii\web\JsExpression(
     <<<JS
 var zTreeObj;
