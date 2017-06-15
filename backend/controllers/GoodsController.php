@@ -217,7 +217,7 @@ class GoodsController extends  Controller{
                         $model->goods_id = \Yii::$app->request->post('goods_id');
                         $model ->photo = $action->getWebUrl();
                         $model->save();
-                        $action->output['goods_id']= $model->photo;
+                        $action->output['fileUrl']= $model->photo;
 
 //                    $imgUrl=$action->getWebUrl();
 //
